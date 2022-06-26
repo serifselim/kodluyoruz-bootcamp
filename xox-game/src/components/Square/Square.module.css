@@ -1,0 +1,26 @@
+.square {
+  border: 10px solid #000;
+  border-radius: 10px;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+  background: white;
+  font-family: 'Finger Paint', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64px;
+  line-height: 94px;
+}
+
+.square:hover {
+  background: gainsboro;
+}
+
+.blue {
+  color: #0026ed;
+}
+
+.red {
+  color: #ff0505;
+}

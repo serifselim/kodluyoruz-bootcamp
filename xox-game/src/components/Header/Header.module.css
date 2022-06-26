@@ -1,0 +1,11 @@
+.header {
+  font-weight: 400;
+  font-size: 44px;
+  line-height: 65px;
+  color: #0026ed;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+
+  margin-top: 158px;
+}
