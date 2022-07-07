@@ -38,7 +38,7 @@ const App = () => {
       return;
     }
 
-    if (!prevArr[index] && !winnerObj.player) { // Kutunun değeri boşsa ve kazanan kişi belli değilsei içeri gir
+    if (!winnerObj.player) { // Kutunun değeri boşsa ve kazanan kişi belli değilsei içeri gir
       prevArr[index] = currentPlayer; // anlık oyuncunun değerini o karenin eğerine ata
       setGameArr(prevArr); // oyunu güncelle
       reversePlayer(); // sonraki oyuncuya geç
