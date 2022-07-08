@@ -6,6 +6,14 @@
   padding: 65px;
 }
 
+.main circle {
+  cursor: pointer;
+}
+
+.main circle:hover {
+  opacity: 0.8;
+}
+
 .header {
   display: flex;
   justify-content: flex-end;

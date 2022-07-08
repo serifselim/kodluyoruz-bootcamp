@@ -1,6 +1,7 @@
+import React, { useContext, useEffect, useState } from 'react';
+import { Context } from '../hooks/provider';
 import Svg from '../svg';
 import useSizing from '../hooks/sizing';
-import { useEffect, useState } from 'react';
 import styles from './Game.module.css';
 
 function Game() {
@@ -8,50 +9,27 @@ function Game() {
   const [size, setSize] = useState({ width: 0, height: 0 });
   const [sira, setSira] = useState(0);
 
-  const list = [
-    {
-      question: '7 * 8',
-      answer1: 56,
-      answer2: 64,
-      answer3: 49,
-      true: 56,
-      result: null
-    },
-    {
-      question: '7 * 8',
-      answer1: 56,
-      answer2: 64,
-      answer3: 49,
-      true: 56,
-      result: null
-    },
-    {
-      question: '7 * 8',
-      answer1: 56,
-      answer2: 64,
-      answer3: 49,
-      true: 56,
-      result: null
-    },
-    {
-      question: '7 * 8',
-      answer1: 56,
-      answer2: 64,
-      answer3: 49,
-      true: 56,
-      result: null
-    },
-    {
-      question: '7 * 8',
-      answer1: 56,
-      answer2: 64,
-      answer3: 49,
-      true: 56,
-      result: null
-    },
+  // Hooks
+  // const [result, setResult] = {
 
-  ];
+  // };
 
+  // Context
+  const {
+    setAllQuestion,
+    score,
+    tour,
+    questionsArr,
+    currentQuestion,
+    currentNumber,
+    checkAnswer,
+    bgColor,
+    isClick
+  } = useContext(Context);
+
+  useEffect(() => {
+    setAllQuestion();
+  }, []);
 
   useEffect(() => {
     const ratio = 1.7;
@@ -71,20 +49,24 @@ function Game() {
   }, [w, h]);
 
   return (
-    <div>
+    <div style={{ background: bgColor }} className={styles.container}>
       <header className={styles.header}>
         <div className={styles.headerContent}>
-          <h3>Score: 120</h3>
-          <h3>Tour: 2</h3>
-          <h3>Questions: 6/7</h3>
+          <h3>Score: {score}</h3>
+          <h3>Tour: {tour}</h3>
+          <h3>Questions: {currentNumber + 1}/{questionsArr.length}</h3>
         </div>
       </header>
       <div className={styles.main}>
-        <Svg width={size.width - 200} height={size.height - 200}
-          question={list[sira].question}
-          a1={list[sira].answer1}
-          a2={list[sira].answer2}
-          a3={list[sira].answer3} />
+        {questionsArr.length > 0 &&
+          <Svg
+            width={size.width - 200}
+            height={size.height - 200}
+            checkAnswer={checkAnswer}
+            isClick={isClick}
+            currentQuestion={currentQuestion}
+          />
+        }
       </div>
     </div>
   );

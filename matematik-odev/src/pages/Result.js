@@ -77,7 +77,6 @@ const Home = () => {
                     </ul>
                 </div>
             </section>
-
         </main>
     );
 };
