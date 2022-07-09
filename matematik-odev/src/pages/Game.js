@@ -9,11 +9,6 @@ function Game() {
   const [size, setSize] = useState({ width: 0, height: 0 });
   const [sira, setSira] = useState(0);
 
-  // Hooks
-  // const [result, setResult] = {
-
-  // };
-
   // Context
   const {
     setAllQuestion,
@@ -24,7 +19,8 @@ function Game() {
     currentNumber,
     checkAnswer,
     bgColor,
-    isClick
+    isClick,
+    clickBtnId
   } = useContext(Context);
 
   useEffect(() => {
@@ -65,6 +61,7 @@ function Game() {
             checkAnswer={checkAnswer}
             isClick={isClick}
             currentQuestion={currentQuestion}
+            clickBtnId={clickBtnId}
           />
         }
       </div>

@@ -70,13 +70,14 @@ const Provider = ({ children }) => {
             }
             setBgColor('#2d2d2d');
             setCurrentNumber(currentNumber + 1);
+            setClickBtnId(null);
             setIsClick(false);
         }, 3000);
     };
 
-    useEffect(() => {
-        console.log(currentQuestion);
-    }, [currentQuestion]);
+    // useEffect(() => {
+    //     console.log(currentQuestion);
+    // }, [currentQuestion]);
 
     useEffect(() => {
         if (questionsArr.length > 0) {
@@ -94,7 +95,8 @@ const Provider = ({ children }) => {
             isClick,
             currentNumber,
             checkAnswer,
-            bgColor
+            bgColor,
+            clickBtnId
         }}>
             {children}
         </Context.Provider>
