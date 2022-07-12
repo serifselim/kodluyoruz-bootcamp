@@ -27,10 +27,6 @@ const Svg = ({ width, height, currentQuestion, clickBtnId, checkAnswer, isClick 
         changeFillColors(trueAnswer, answerArr[0], answerArr[1], 'green');
       }
 
-      if (clickBtnId !== answerArr[0] && trueAnswer === answerArr[0]) {
-        setFillObj(prevState => ({ ...prevState, a1: 'green' }));
-      }
-
     } else {
       setFillObj({ a1: 'white', a2: 'white', a3: 'white' });
     }
