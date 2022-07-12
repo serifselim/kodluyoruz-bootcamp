@@ -8,6 +8,7 @@ import { Context } from './hooks/provider.js';
 const App = () => {
     const { setTotalResultToStorage, setTour } = useContext(Context);
 
+    // Uygulama ilk çalıştığında çalıştırılacak methodlar
     useEffect(() => {
         const resultData = JSON.parse(localStorage.getItem('totalResult'));
         const tourData = JSON.parse(localStorage.getItem('tour'));
@@ -22,6 +23,7 @@ const App = () => {
         }
     }, []);
 
+    // React router ayarlamaları
     return (
         <Routes>
             <Route path="/" element={<Home />} />

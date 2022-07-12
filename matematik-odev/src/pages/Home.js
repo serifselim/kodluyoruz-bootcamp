@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { Context } from '../hooks/provider';
 
 const Home = () => {
+    // Context
     const { totalResult, tour, setTour } = useContext(Context);
 
     return (

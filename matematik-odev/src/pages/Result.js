@@ -8,9 +8,10 @@ import FalseIcon from '../assets/FalseIcon';
 import { Context } from '../hooks/provider';
 
 const Home = () => {
+    // Context 
     const { resultQuestions, trueAnswerCount, questionsArr, score, setAllQuestion } = useContext(Context);
-    // const navigate = useNavigate();
 
+    // Oyuna başlamak için tıklandığında tüm soruları yükler
     const handleClick = () => {
         setAllQuestion();
     };

@@ -28,24 +28,24 @@ const Provider = ({ children }) => {
     const [totalResult, setTotalResult] = useState({ totalScore: 0, totalQuestions: 0, correctAnswers: 0 });
 
     const setAllQuestion = () => {
-        const newArr = [];
-        setCurrentNumber(0);
-        setResultQuestions([]);
+        const newArr = []; // başta boş bir değişken oluştur
+        setCurrentNumber(0); // Aktif numara 0'dan başlayacak
+        setResultQuestions([]); // Çözdüğümüz soruların ilk hali boş olacak
 
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 10; i++) { // 10 soruyu yüklemek için for döngüsü
             const numA = randomNmb();
             const numB = randomNmb();
-            const scorePoint = getSqrt(numA, numB);
+            const scorePoint = getSqrt(numA, numB); // puan için sayıların kare kökünü aldık 
             const trueAnswer = numA * numB;
-            const answerObj = {
+            const answerObj = { // bir fazla ve bir eksik olarak diğer yanıtları ekledik
                 a1: numA * numB,
                 a2: (numA + 1) * numB,
                 a3: numA * (numB - 1)
             };
-            let answerArr = Object.values(answerObj);
-            answerArr = shuffleArray(answerArr);
+            let answerArr = Object.values(answerObj); // yanıtların değerlerini array içerisinde topladık
+            answerArr = shuffleArray(answerArr); // bu arrayi karıştırdık
 
-            newArr.push({
+            newArr.push({ // tüm değerleri arrayimizin içerisine pushladık
                 numA,
                 numB,
                 scorePoint,
@@ -54,17 +54,17 @@ const Provider = ({ children }) => {
                 result: null
             });
         }
-        setCurrentQuestion(newArr[currentNumber]);
-        setQuestionsArr(newArr);
+        setCurrentQuestion(newArr[currentNumber]); // aktif soruyu güncelledik
+        setQuestionsArr(newArr); // esas arrayimize oluşturduğumuz yeni arrayi atadık
     };
 
-    const checkAnswer = (answer, btnId) => {
+    const checkAnswer = (answer, btnId) => { // cevabın doğruluğunun kontrolü
         const isTrue = answer === currentQuestion.trueAnswer;
         const resultQuestionText = `${currentQuestion.numA} x ${currentQuestion.numB} = ${currentQuestion.trueAnswer}`;
         setIsClick(true);
         setClickBtnId(btnId);
 
-        if (isTrue) {
+        if (isTrue) { // eğer doğruysa 
             setResultQuestions([...resultQuestions, {
                 resultQuestionText,
                 isAnswerTrue: true
@@ -90,7 +90,7 @@ const Provider = ({ children }) => {
         }, 3000);
     };
 
-    const setTotalResultToStorage = (data) => {
+    const setTotalResultToStorage = (data) => { // toplam değerlerimizi güncelleyen fonksiyon 
         if (data) {
             setTotalResult(data);
         } else {
@@ -104,19 +104,18 @@ const Provider = ({ children }) => {
         }
     };
 
-    useEffect(() => {
+    useEffect(() => { // diğer soruya geçmemizi sağlar
         if (questionsArr.length > 0) {
             setCurrentQuestion(questionsArr[currentNumber]);
         }
     }, [currentNumber]);
 
-    useEffect(() => {
+    useEffect(() => { // local storage a kaydetmemizi sağlar
         localStorage.setItem('totalResult', JSON.stringify(totalResult));
     }, [totalResult]);
 
-    useEffect(() => {
+    useEffect(() => { // local storage a kaydetmemizi sağlar
         localStorage.setItem('tour', JSON.stringify(tour));
-        console.log(tour);
     }, [tour]);
 
     return (

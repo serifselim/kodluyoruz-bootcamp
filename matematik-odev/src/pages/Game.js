@@ -30,6 +30,7 @@ function Game() {
     setAllQuestion();
   }, []);
 
+  // Ekran ayarları
   useEffect(() => {
     const ratio = 1.7;
 
@@ -47,6 +48,7 @@ function Game() {
     }
   }, [w, h]);
 
+  // eğer anlık sorumuz ondan büyükse diğer ekrana geç
   useEffect(() => {
     if ((currentNumber) > 9) {
       setTotalResultToStorage();
