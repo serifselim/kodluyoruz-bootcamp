@@ -3,11 +3,13 @@ import { Context } from '../hooks/provider';
 import Svg from '../svg';
 import useSizing from '../hooks/sizing';
 import styles from './Game.module.css';
+import { useNavigate } from 'react-router-dom';
 
 function Game() {
   const [w, h] = useSizing();
   const [size, setSize] = useState({ width: 0, height: 0 });
   const [sira, setSira] = useState(0);
+  const navigate = useNavigate();
 
   // Context
   const {
@@ -20,7 +22,8 @@ function Game() {
     checkAnswer,
     bgColor,
     isClick,
-    clickBtnId
+    clickBtnId,
+    setTotalResultToStorage
   } = useContext(Context);
 
   useEffect(() => {
@@ -43,6 +46,13 @@ function Game() {
       });
     }
   }, [w, h]);
+
+  useEffect(() => {
+    if ((currentNumber) > 9) {
+      setTotalResultToStorage();
+      navigate('/result');
+    }
+  }, [currentNumber]);
 
   return (
     <div style={{ background: bgColor }} className={styles.container}>

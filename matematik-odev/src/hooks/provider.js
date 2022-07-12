@@ -15,7 +15,7 @@ const shuffleArray = (array) => {
 };
 
 const Provider = ({ children }) => {
-    const [tour, setTour] = useState(1);
+    const [tour, setTour] = useState(0);
     const [questionsArr, setQuestionsArr] = useState([]);
     const [currentQuestion, setCurrentQuestion] = useState({});
     const [currentNumber, setCurrentNumber] = useState(0);
@@ -23,9 +23,14 @@ const Provider = ({ children }) => {
     const [bgColor, setBgColor] = useState('#2d2d2d');
     const [isClick, setIsClick] = useState(false);
     const [clickBtnId, setClickBtnId] = useState(null);
+    const [resultQuestions, setResultQuestions] = useState([]);
+    const [trueAnswerCount, setTrueAnswerCount] = useState(0);
+    const [totalResult, setTotalResult] = useState({ totalScore: 0, totalQuestions: 0, correctAnswers: 0 });
 
     const setAllQuestion = () => {
         const newArr = [];
+        setCurrentNumber(0);
+        setResultQuestions([]);
 
         for (let i = 0; i < 10; i++) {
             const numA = randomNmb();
@@ -55,12 +60,22 @@ const Provider = ({ children }) => {
 
     const checkAnswer = (answer, btnId) => {
         const isTrue = answer === currentQuestion.trueAnswer;
+        const resultQuestionText = `${currentQuestion.numA} x ${currentQuestion.numB} = ${currentQuestion.trueAnswer}`;
         setIsClick(true);
         setClickBtnId(btnId);
 
         if (isTrue) {
+            setResultQuestions([...resultQuestions, {
+                resultQuestionText,
+                isAnswerTrue: true
+            }]);
+            setTrueAnswerCount(trueAnswerCount + 1);
             setBgColor('green');
         } else {
+            setResultQuestions([...resultQuestions, {
+                resultQuestionText,
+                isAnswerTrue: false
+            }]);
             setBgColor('red');
         }
 
@@ -75,9 +90,19 @@ const Provider = ({ children }) => {
         }, 3000);
     };
 
-    // useEffect(() => {
-    //     console.log(currentQuestion);
-    // }, [currentQuestion]);
+    const setTotalResultToStorage = (data) => {
+        if (data) {
+            setTotalResult(data);
+        } else {
+            setTotalResult(prevState => (
+                {
+                    ...prevState,
+                    totalScore: prevState.totalScore + score,
+                    totalQuestions: prevState.totalQuestions + questionsArr.length,
+                    correctAnswers: prevState.correctAnswers + trueAnswerCount
+                }));
+        }
+    };
 
     useEffect(() => {
         if (questionsArr.length > 0) {
@@ -85,18 +110,32 @@ const Provider = ({ children }) => {
         }
     }, [currentNumber]);
 
+    useEffect(() => {
+        localStorage.setItem('totalResult', JSON.stringify(totalResult));
+    }, [totalResult]);
+
+    useEffect(() => {
+        localStorage.setItem('tour', JSON.stringify(tour));
+        console.log(tour);
+    }, [tour]);
+
     return (
         <Context.Provider value={{
             tour,
             questionsArr,
             score,
-            setAllQuestion,
             currentQuestion,
             isClick,
             currentNumber,
-            checkAnswer,
             bgColor,
-            clickBtnId
+            clickBtnId,
+            resultQuestions,
+            trueAnswerCount,
+            totalResult,
+            setTour,
+            checkAnswer,
+            setAllQuestion,
+            setTotalResultToStorage
         }}>
             {children}
         </Context.Provider>

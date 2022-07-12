@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styles from './Result.module.css';
 import LineComp from '../assets/Line.js';
 import EllipseComp from '../assets/Ellipse';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import TrueIcon from '../assets/TrueIcon';
+import FalseIcon from '../assets/FalseIcon';
+import { Context } from '../hooks/provider';
 
 const Home = () => {
+    const { resultQuestions, trueAnswerCount, questionsArr, score, setAllQuestion } = useContext(Context);
+    // const navigate = useNavigate();
+
+    const handleClick = () => {
+        setAllQuestion();
+    };
+
     return (
         <main className={styles.container}>
             <section className={styles.content}>
@@ -17,12 +26,12 @@ const Home = () => {
                         />
                     </div>
                     <div className={styles.details}>
-                        <h2>Point: 129</h2>
-                        <h2>Questions: 10</h2>
-                        <h2>Correct Answers: 8</h2>
+                        <h2>Point: {score}</h2>
+                        <h2>Questions: {questionsArr.length}</h2>
+                        <h2>Correct Answers: {trueAnswerCount}</h2>
                     </div>
                     <div className={styles.footer}>
-                        <Link to="/game">
+                        <Link onClick={handleClick} to="/" >
                             <EllipseComp
                                 x='150'
                                 name="Restart"
@@ -38,42 +47,12 @@ const Home = () => {
                         />
                     </div>
                     <ul className={styles.list}>
-                        <li className={styles.listItem}>
-                            <h4>3 x 4 = 12</h4>
-                            <TrueIcon />
-                        </li>
-                        <li className={styles.listItem}>
-                            <h4>3 x 4 = 12</h4>
-                            <TrueIcon />
-                        </li>
-                        <li className={styles.listItem}>
-                            <h4>3 x 4 = 12</h4>
-                            <TrueIcon />
-                        </li>
-                        <li className={styles.listItem}>
-                            <h4>3 x 4 = 12</h4>
-                            <TrueIcon />
-                        </li>
-                        <li className={styles.listItem}>
-                            <h4>3 x 4 = 12</h4>
-                            <TrueIcon />
-                        </li>
-                        <li className={styles.listItem}>
-                            <h4>3 x 4 = 12</h4>
-                            <TrueIcon />
-                        </li>
-                        <li className={styles.listItem}>
-                            <h4>3 x 4 = 12</h4>
-                            <TrueIcon />
-                        </li>
-                        <li className={styles.listItem}>
-                            <h4>3 x 4 = 12</h4>
-                            <TrueIcon />
-                        </li>
-                        <li className={styles.listItem}>
-                            <h4>3 x 4 = 12</h4>
-                            <TrueIcon />
-                        </li>
+                        {resultQuestions && resultQuestions.map((question, index) => (
+                            <li key={index} className={styles.listItem}>
+                                <h4>{question.resultQuestionText}</h4>
+                                {question.isAnswerTrue ? <TrueIcon /> : <FalseIcon />}
+                            </li>
+                        ))}
                     </ul>
                 </div>
             </section>
